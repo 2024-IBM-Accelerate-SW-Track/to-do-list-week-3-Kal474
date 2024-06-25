@@ -13,16 +13,16 @@ import { Card, CardContent, Grid, ListItemButton, ListItemText, Checkbox, } from
 const Todos = ({ todos, deleteTodo }) => {
   const todoList = todos.length ? (
     todos.map((todo) => {
-        let color = "#ffffffff"; 
-        const dueDate = new Date(todo.due); 
-        const today = new Date(); 
+      const dueDate = new Date(todo.due);
+      const today = new Date();
 
-        if (dueDate < today) {
-          color = "#ffcccc"; 
-        }
+      // Determine if the task is overdue
+      const isOverdue = dueDate < today;
+      // Define the background color based on overdue status
+      const backgroundColor = isOverdue ? "#ffcccc" : "#ffffff";
         return (
           <Grid key={todo.id}>
-            <Card style={{ marginTop: 10 }}>
+            <Card style={{ marginTop: 10, backgroundColor }}>
               {/* Remember, we set the local state of this todo item when the user submits the form in
             AddTodo.js. All we need to do is return the todo list item */}
               <ListItemButton component="a" href="#simple-list">

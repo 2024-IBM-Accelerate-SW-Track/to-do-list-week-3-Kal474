@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { unmountComponentAtNode } from 'react-dom';
 import App from './App'; // Adjust the path as per your project structure
+//import { screen } from '@testing-library/react';
 
 let container = null;
 
@@ -37,6 +38,15 @@ test('test that App component can be deleted thru checkbox', () => {
 test('test that App component renders different colors for past due events', () => {
   render(<App />);
 });
+
+
+/*test('test that new-item-button is a button', () => {
+  render(<App />);
+  const element = screen.getByTestId('new-item-button');
+  expect(element).toBeInTheDocument();
+  expect(element.tagName).toBe('BUTTON');
+});*/
+
 
 // No duplicate task
 test('test that duplicate tasks are not added', () => {
@@ -97,9 +107,14 @@ test('test that late tasks have different colors', () => {
   fireEvent.change(inputDate, { target: { value: pastDueDate } });
   fireEvent.click(button);
 
-  const taskCard = screen.getByTestId(/Late Task/i).parentElement; // Getting the Card element
-  expect(taskCard).toHaveStyle('background-color: #ffcccc');
+  //const taskCard = screen.getByTestId(/Late Task/i).parentElement; // Getting the Card element
+  const taskCard = screen.getByTestId('Late Task').parentElement;
+
+  // Using getComputedStyle to check background-color
+  const computedStyles = window.getComputedStyle(taskCard);
+  expect(computedStyles.backgroundColor).toBe('rgb(255, 204, 204)'); // Check the exact RGB value
 });
+
 
 // Delete Task
 test('test that task is deleted', () => {
